@@ -24,6 +24,7 @@ body {
     color: #5e94b9;
 }
 
+
 /*
  * Notifications at the top of the popup. Success notes
  * are backgrounded in blue, fail notes are in red.
@@ -51,6 +52,7 @@ body {
     /*border: 22px 0 solid #ba5f5f;*/
 }
 
+
 /*
  * User input area
  */
@@ -73,7 +75,17 @@ textarea {
 
 
 /*
- * Display the citation
+ * Loading animation
+ */
+
+#loading {
+    display: none;
+    height: 152px;
+}
+
+
+/*
+ * Citation display
  */
 
 #result {
@@ -84,7 +96,6 @@ textarea {
 #citation {
     height: 120px;
 }
-
 
 
 /*
