@@ -1,51 +1,73 @@
-// Run on page load
+/*
+ * Constants
+ */
+var BASE_URL = 'http://localhost:8080/cite/';
+var FADE_IN_DELAY = 200;
+var FADE_OUT_DELAY = 3700;
+
+/*
+ * Entry point, runs on page load.
+ */
 $(function() {
     $('#cite').on('click', get_citation);
-    $('#rest').on('click', resetSearch);
+    $('#reset').on('click', resetSearch);
+);
 
-    $('#author').val('some guy');
-    $('#article').val('great article');
-});
-
-// Get the proper citation of this article
+/*
+ * Gets the proper citation of this article.
+ */
 function get_citation() {
     var author = $('#author').val();
     var title = $('#article').val();
+
+    // Send off ajax request, expecting JSON response.
     var request = $.ajax({
-        url: 'http://localhost:8080/cite/' + author + '/' + title,
+        url: BASE_URL + author + '/' + title,
         type: 'GET',
-        dataType: 'json'
+        dataType: 'html'
     });
 
-    // Put the response into the textarea and copy it to clipboard
-    request.done(function(data) {
-        console.log("done now!");
-        console.log(data);
+    // Parse response. If successful, put into the textarea and copy it
+    // into to the user's clipboard.
+    request.done(function(response) {
+        var data = JSON.parse(response);
 
-        $('#user-input').hide();
+        if(data['success']) {
+            $('#cite').hide();
+            $('#reset').show();
 
-        $('#citation').val(data[0]['citation']);
-        $('#citation').select();
+            $('#user-input').hide();
 
-        $('#result').fadeIn(200);
+            $('#result').fadeIn(FADE_IN_DELAY);
+            $('#citation').val(data['citation']);
+            $('#citation').select();
 
-        document.execCommand('copy');
-        console.log(data[0]['citation']);
+            document.execCommand('copy');
+            sendNotification('copied to clipboard', 'success');
+        } else {
+            sendNotification('error... try again', 'fail');
+        }
 
-        sendNotification('copied to clipboard');
     });
 }
 
-// Add a notification to the notification panel
-function sendNotification(note) {
-    $('#notification div').fadeIn(200);
+/*
+ * Adds a notification to the notification panel.
+ * note - The message text of the notification.
+ * type - Is it a success or fail notification (added as a class to the note).
+ */
+function sendNotification(note, type) {
+    $('#notification div').fadeIn(FADE_IN_DELAY);
     $('#notification').html(
-        '<div>' + note + '</div>'
+        '<div class=' + type + '>' + note + '</div>'
     );
-    $('#notification div').fadeOut(3000);
+    // The notification fades out.
+    $('#notification div').fadeOut(FADE_OUT_DELAY);
 }
 
-// Reset the popup to allow for a new search
+/*
+ * Resets the popup to allow for a new search.
+ */
 function resetSearch() {
     // Empty the textareas
     $('#author').val('');
@@ -53,6 +75,9 @@ function resetSearch() {
 
     // Show the input divs, hide the result div
     $('#result').hide();
-    $('#user-input').fadeIn(200);
+    $('#user-input').fadeIn(FADE_IN_DELAY);
 
+    // Flip the buttons
+    $('#reset').hide();
+    $('#cite').show();
 }

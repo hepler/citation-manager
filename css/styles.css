@@ -24,6 +24,72 @@ body {
     color: #5e94b9;
 }
 
+/*
+ * Notifications at the top of the popup. Success notes
+ * are backgrounded in blue, fail notes are in red.
+ */
+
+#notification {
+    height: 26px;
+    width: 100%;
+
+    font-size: 24px;
+    font-weight: bolder;
+    color: #fff;
+}
+
+.success {
+    /*background:rgba(95,186,110,.7);*/
+    /*border: 2px 0 solid #5fba6e;*/
+
+    background:rgba(94,148,185,.7);
+    /*border-top: 2px 0 solid #5e94b9;*/
+}
+
+.fail {
+    background:rgba(186,95,95,.7);
+    /*border: 22px 0 solid #ba5f5f;*/
+}
+
+/*
+ * User input area
+ */
+
+#user-input {
+    height: 152px;
+}
+
+textarea {
+    resize:none;
+    outline: none;
+    border: 2px solid #000;
+    border-radius: 5px;
+
+    width: 300px;
+    margin: 10px;
+
+    font-size: 14px;
+}
+
+
+/*
+ * Display the citation
+ */
+
+#result {
+    display: none;
+    height: 152px;
+}
+
+#citation {
+    height: 120px;
+}
+
+
+
+/*
+ * Buttons
+ */
 button {
     position: relative;
     vertical-align: top;
@@ -31,7 +97,7 @@ button {
     /*border: 2px solid;*/
     /*border-radius: 2px;*/
 
-    margin: 10px 5px;
+    margin: 10px 5px 15px 5px;
     width: 200px;
     /*height: 40px;*/
 
@@ -55,48 +121,6 @@ button:hover {
     color: #fff;
 }
 
-textarea {
-    resize:none;
-    outline: none;
-    border: 2px solid #000;
-    border-radius: 5px;
-
-    width: 300px;
-    margin: 10px;
-
-    font-size: 14px;
-}
-
-textarea .input {
-    height: 40px;
-}
-
-#citation {
-    height: 200px;
-}
-
-#result {
+#reset {
     display: none;
-}
-
-
-/*
- * Notifications at the top of the popup
- */
-
-#notification {
-    height: 26px;
-    width: 100%;
-
-    padding: 0 0 2px 0;
-
-    font-size: 24px;
-}
-
-#notification div {
-    background:rgba(94,148,185,.7);
-    /*background-color: #5e94b9;*/
-    border: 2px 0 solid #5e94b9;
-    font-weight: bolder;
-    color: #fff;
 }
