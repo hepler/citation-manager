@@ -9,24 +9,59 @@ var FADE_OUT_DELAY = 3700;
  * Entry point, runs on page load.
  */
 $(function() {
-    $('#cite').on('click', get_citation);
+    $('#cite').on('click', handleCitation);
     $('#reset').on('click', resetSearch);
-
 });
 
 /*
- * Gets the proper citation of this article.
+ * Handle button click for getting the citation.
  */
-function get_citation() {
-    showLoaderAnimation();
-
-    // Get the article title and author name.
+function handleCitation() {
+    // Get the article title and author name, then ensure
+    // that they are valid.
     var author = $('#author').val();
     var title = $('#article').val();
+    var approved = validateFields(author, title);
+
+    if(approved) {
+        showLoaderAnimation();
+        ajax_getCitation(author, title);
+    } else {
+        sendNotification('title is required', 'fail');
+    }
+}
+
+/*
+ * Ensures that the fields are filled out properly.
+ * author - The author of the article.
+ * title - The title of the article.
+ * Returns boolean, true if valid.
+ */
+function validateFields(author, title) {
+    // Title is required, author is optional
+    var trimmedTitle = title.replace(/ /g,'');
+    if(trimmedTitle.length == 0) {
+        return false;
+    }
+
+    return true;
+
+    // TODO
+    // - more validation/sanitization here
+}
+
+/*
+ * Query the API for the proper citation for this item.
+ * author - The author of the article.
+ * title - The title of the article.
+ */
+function ajax_getCitation(author, title) {
+    // If they didn't give an author, don't include it in the url.
+    var url = author ? author + '/' + title : title;
 
     // Send off ajax request, expecting JSON response.
     var request = $.ajax({
-        url: BASE_URL + author + '/' + title,
+        url: BASE_URL + url,
         type: 'GET',
         dataType: 'html'
     });
@@ -39,12 +74,14 @@ function get_citation() {
         if(data['success']) {
             hideLoaderAnimation();
 
+            // Copy the contents of the textarea into the clipboard.
             $('#citation').val(data['citation']);
             $('#citation').select();
-
             document.execCommand('copy');
+
             sendNotification('copied to clipboard', 'success');
         } else {
+            resetSearch();
             sendNotification('error... try again', 'fail');
         }
 
