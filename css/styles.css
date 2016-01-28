@@ -1,46 +1,134 @@
 body {
-    width: 300px;
+    width: 400px;
     height: 0;
+    margin: 2px 0;
     background-color: #dedede;
+    background-image: url('../img/bg.png');
     overflow-x: hidden;
-    padding: 5px;
     text-align: center;
 }
 
-button {
-    position: relative;
-    vertical-align: top;
-    padding: 0;
-    border: 2px solid;
-    border-radius: 2px;
+#title {
+    background:rgba(255,255,255,.7);
+    border-top: 2px solid #5e94b9;
+    border-bottom: 2px solid #5e94b9;
 
-    margin: 10px 5px;
-    width: 120px;
-    height: 40px;
+    height: 26px;
+    width: 100%;
 
-    font-size: 14px;
-    text-align: center;
-    cursor: pointer;
+    margin: 5px 0;
+    padding: 10px 0;
 
-    background: #99C299;
-    border-color: #197519;
-    color: #197519;
-
-    outline: none;
+    font-size: 24px;
+    font-weight: bolder;
+    color: #5e94b9;
 }
 
-button:hover {
-    background-color: #66A366;
-    color: #dedede;
+
+/*
+ * Notifications at the top of the popup. Success notes
+ * are backgrounded in blue, fail notes are in red.
+ */
+
+#notification {
+    height: 26px;
+    width: 100%;
+
+    font-size: 24px;
+    font-weight: bolder;
+    color: #fff;
+}
+
+.success {
+    /*background:rgba(95,186,110,.7);*/
+    /*border: 2px 0 solid #5fba6e;*/
+
+    background:rgba(94,148,185,.7);
+    /*border-top: 2px 0 solid #5e94b9;*/
+}
+
+.fail {
+    background:rgba(186,95,95,.7);
+    /*border: 22px 0 solid #ba5f5f;*/
+}
+
+
+/*
+ * User input area
+ */
+
+#user-input {
+    height: 152px;
 }
 
 textarea {
     resize:none;
     outline: none;
+    border: 2px solid #000;
+    border-radius: 5px;
 
+    width: 300px;
     margin: 10px;
-    width: 250px;
-    height: 20px;
 
     font-size: 14px;
+}
+
+
+/*
+ * Loading animation
+ */
+
+#loading {
+    display: none;
+    height: 152px;
+}
+
+
+/*
+ * Citation display
+ */
+
+#result {
+    display: none;
+    height: 152px;
+}
+
+#citation {
+    height: 120px;
+}
+
+
+/*
+ * Buttons
+ */
+button {
+    position: relative;
+    vertical-align: top;
+    padding: 20px;
+
+    margin: 10px 5px 15px 5px;
+    width: 200px;
+
+    font-size: 24px;
+    font-weight: bolder;
+    text-align: center;
+    cursor: pointer;
+
+    background: #fff;
+    border-color: #000;
+    border: 4px solid;
+    border-radius: 100px;
+    color: #000;
+
+    outline: none;
+}
+
+button:hover {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}
+
+#reset {
+    display: none;
 }
